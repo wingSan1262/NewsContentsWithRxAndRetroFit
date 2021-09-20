@@ -1,0 +1,2 @@
+rootProject.name = "RetroFitAndRx"
+include ':app'

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".views.fragments.ViewPagerCardFragments">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="15dp"
+
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar_circular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminate="true"/>
+
+                <ImageView
+                    android:id="@+id/card_fragment_background_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/ic_baseline_search_24"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/container_news_pager"
+                    android:background="#dd7047df"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:id="@+id/headline"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="10"
+                        android:textSize="23sp"
+                        android:text="Headline Title asubdibod aibd aibd ai dibad"/>
+                    <TextView
+                        android:id="@+id/news_pager_date"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:textSize="16sp"
+                        android:text="3 August 2017"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+</layout>
