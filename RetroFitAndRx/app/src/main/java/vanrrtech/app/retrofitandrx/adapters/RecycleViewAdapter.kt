@@ -74,6 +74,9 @@ class RecycleViewAdapter (context: Context, viewTypeList : ArrayList<ViewTypeDat
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         // set view, set adapter for child recycle view . . .
+        if (position < listChildViewHolder!!.size){
+            return
+        }
         if (dataList!!.get(position).mViewTyoe == NEWS_PAGER_VIEW) {
             var mHolder = (holder as View1ViewHolder)
             mHolder.renderDataToView(mfragment!!, position)
