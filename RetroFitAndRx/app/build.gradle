@@ -36,6 +36,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -65,5 +69,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.0.5'
 
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
 }

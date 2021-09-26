@@ -19,7 +19,7 @@ import kotlin.collections.HashMap
 class NewsListAdapter() : Observable(){
     var completeNewsList = HashMap<String, ViewTypeDataHolder>()
     var dataSizeParsingCounter : Int? = 0
-    var mInterface : RetrofitInterface = RetrofitClientKt.getClient().create(RetrofitInterface::class.java)
+    var mInterface : RetrofitInterface = RetrofitClientKt.getClientNews().create(RetrofitInterface::class.java)
     var compositeDisposable = CompositeDisposable()
     var mCompleteArrayList = ArrayList<ViewTypeDataHolder>()
 

@@ -9,20 +9,32 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClientKt {
 
     companion object {
-        var mRetrofitClient : Retrofit? = null
+        var mRetrofitNewsClient : Retrofit? = null
 
-        public fun getClient () : Retrofit{
-            if(mRetrofitClient == null){
+        public fun getClientNews () : Retrofit{
+            if(mRetrofitNewsClient == null){
                 val gson = GsonBuilder()
                     .setLenient()
                     .create()
-                mRetrofitClient = Retrofit.Builder()
+                mRetrofitNewsClient = Retrofit.Builder()
                     .baseUrl("https://newsapi.org/v2/") // .baseUrl("https://vanrrbackend.000webhostapp.com/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             }
-            return mRetrofitClient!!
+            return mRetrofitNewsClient!!
+        }
+
+        var mRetrofitCovidClient : Retrofit? = null
+
+        public fun getClientCovid () : Retrofit{
+            if(mRetrofitCovidClient == null){
+                mRetrofitCovidClient = Retrofit.Builder()
+                    .baseUrl("https://data.covid19.go.id/public/api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            return mRetrofitCovidClient!!
         }
     }
 }

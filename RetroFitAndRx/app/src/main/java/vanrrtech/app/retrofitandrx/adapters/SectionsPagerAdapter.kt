@@ -9,7 +9,7 @@ import vanrrtech.app.retrofitandrx.views.ViewPagerCardFragments
 
 private val TAB_TITLES = arrayOf(
     "News",
-    "Meme"
+    "COVID"
 )
 
 /**
