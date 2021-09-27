@@ -99,14 +99,14 @@ class TotalCovidRecycleAdapter (context: Context) : RecyclerView.Adapter<TotalCo
                     mProgressBar?.visibility = View.VISIBLE
                     if(mTotalCovid.positiveCase != null){
                         likeTheRealRenderingStuff(mProgressBar!!, mContext!!, logo!!, title!!,
-                            mTotalCovid.recovered!!, valueData!!, "Horspitalized Case", R.drawable.hospital, "#f76161")
+                            mTotalCovid.hospitalized!!, valueData!!, "Horspitalized Case", R.drawable.hospital, "#f76161")
                     }
                 }
                 3 -> { /** Covid Passed Away **/
                     mProgressBar?.visibility = View.VISIBLE
                     if(mTotalCovid.positiveCase != null){
                         likeTheRealRenderingStuff(mProgressBar!!, mContext!!, logo!!, title!!,
-                            mTotalCovid.recovered!!, valueData!!, "Deceased", R.drawable.deceased, "#A9A9A9")
+                            mTotalCovid.deceased!!, valueData!!, "Deceased", R.drawable.deceased, "#A9A9A9")
                     }
                 }
             }
