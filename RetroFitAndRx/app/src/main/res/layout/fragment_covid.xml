@@ -18,6 +18,7 @@
             android:name="vanrrtech.app.retrofitandrx.views.RegionChooserFragment" />
 
         <androidx.core.widget.NestedScrollView
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
@@ -110,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="15dp"
-                    android:text="Vaccine Infection Graph"
+                    android:text="Deceased Graph"
                     android:textSize="25dp"
                     android:textStyle="bold"/>
 
@@ -118,7 +119,7 @@
                     android:background="#cc7fa1f5"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/chart_vaccine"
+                    android:id="@+id/death_chart"
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
 

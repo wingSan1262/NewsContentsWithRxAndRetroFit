@@ -1,5 +1,6 @@
 package vanrrtech.app.retrofitandrx.modelview
 
+import com.github.mikephil.charting.data.Entry
 import vanrrtech.app.retrofitandrx.adapters.NewsListAdapter
 import vanrrtech.app.retrofitandrx.datamodels.ViewTypeDataHolder
 import java.util.ArrayList
