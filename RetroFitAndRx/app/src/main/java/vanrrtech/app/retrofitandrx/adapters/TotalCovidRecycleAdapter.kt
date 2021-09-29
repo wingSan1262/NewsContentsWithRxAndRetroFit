@@ -1,6 +1,7 @@
 package vanrrtech.app.retrofitandrx.adapters
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
@@ -124,6 +125,7 @@ class TotalCovidRecycleAdapter (context: Context) : RecyclerView.Adapter<TotalCo
             Glide.with(context!!).load(logoId!!).into(logo!!)
             logo?.visibility = View.VISIBLE
             title?.text = "\n" + titleString + "\n" + value!!.toString()
+            title?.typeface = Typeface.DEFAULT_BOLD
             title?.setTextColor(Color.parseColor(color))
 //            valueData?.text = value!!.toString()
 //            valueData?.setTextColor(Color.parseColor(color))

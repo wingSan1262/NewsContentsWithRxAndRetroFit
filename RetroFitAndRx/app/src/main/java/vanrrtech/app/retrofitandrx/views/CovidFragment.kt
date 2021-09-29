@@ -8,9 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -22,9 +27,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import vanrrtech.app.retrofitandrx.R
 import vanrrtech.app.retrofitandrx.adapters.NewsListViewAdapter
+import vanrrtech.app.retrofitandrx.adapters.SectionsPagerAdapter
 import vanrrtech.app.retrofitandrx.adapters.TotalCovidRecycleAdapter
 import vanrrtech.app.retrofitandrx.databinding.FragmentCovidBinding
 import vanrrtech.app.retrofitandrx.datamodels.CovidJsonDataHolder
+import vanrrtech.app.retrofitandrx.datamodels.NewsItemDataModelForJSON
 import vanrrtech.app.retrofitandrx.datamodels.TotalCovidDataHolder
 import vanrrtech.app.retrofitandrx.modelview.CovidModelView
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
@@ -49,6 +56,13 @@ class CovidFragment : Fragment(), java.util.Observer {
     private var mModelView : CovidModelView? = CovidModelView()
     private var mRecyclerView : RecyclerView? = null
 
+    private var covidCampaigViewPager : ViewPager? = null
+    private var mHospitalImageview : ImageView? = null
+    private var hospitalTextView : TextView? = null
+
+
+    private var mViewPager : ViewPager? = null
+
     var covidCase : LineChart? = null
     var deathCase : LineChart? = null
 
@@ -68,7 +82,7 @@ class CovidFragment : Fragment(), java.util.Observer {
 
 
         // Inflate the layout for this fragment
-        mBinding = vanrrtech.app.retrofitandrx.databinding.FragmentCovidBinding.inflate(inflater, container, false)
+        mBinding = FragmentCovidBinding.inflate(inflater, container, false)
 
         //setUpRecyclerView
         mRecyclerView = mBinding?.covidMonitorRv
@@ -85,9 +99,31 @@ class CovidFragment : Fragment(), java.util.Observer {
         mRecyclerView?.adapter = mAdapter
         mModelView?.startFetchingData()
 
+        covidCampaigViewPager = mBinding?.covidCampaignBanner
+        mHospitalImageview = mBinding!!.hospitalLayout.findViewById(R.id.image_card)
+        hospitalTextView = mBinding!!.hospitalLayout.findViewById(R.id.headline_card)
+        (mBinding!!.hospitalLayout.findViewById(R.id.progress_bar_circular) as ProgressBar).visibility = View.INVISIBLE
+
+        setCovidCampaign()
+        Glide.with(requireContext()).load(R.drawable.ambulance).into(mHospitalImageview!!)
+        hospitalTextView?.text = "click here to find nearby hospital"
+
         covidCase = mBinding?.chartCovid
         deathCase = mBinding?.deathChart
+        mViewPager = mBinding?.covidIndonesiaNews
         return  mBinding?.root
+    }
+
+    private fun setCovidCampaign() {
+        val mList = ArrayList<NewsItemDataModelForJSON>()
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireContext(), childFragmentManager, mList)
+        sectionsPagerAdapter.setTypeContent(ViewPagerCardFragments.COVID_CAMPAIGN)
+        val mGifList = ArrayList<Int>()
+        mGifList.add(R.drawable.wear_mask)
+        mGifList.add(R.drawable.wash_hand)
+        mGifList.add(R.drawable.keep_distance)
+        sectionsPagerAdapter.setGifList(mGifList)
+        covidCampaigViewPager?.adapter = sectionsPagerAdapter
     }
 
     companion object {
@@ -113,8 +149,16 @@ class CovidFragment : Fragment(), java.util.Observer {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun update(o: Observable?, arg: Any?) {
         (mRecyclerView?.adapter as TotalCovidRecycleAdapter).setDataList(mModelView?.mTotalCovidDataHolder!!)
-
+        setNewsPagerCovid()
         setGraph()
+    }
+
+    fun setNewsPagerCovid(){
+        val mList = ArrayList<NewsItemDataModelForJSON>()
+        mList.addAll(mModelView?.mCovidArticles!!)
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireContext(), childFragmentManager, mList)
+        sectionsPagerAdapter.setTypeContent(ViewPagerCardFragments.COVID_CONTENT)
+        mViewPager?.adapter = sectionsPagerAdapter
     }
 
     fun setGraph(){
