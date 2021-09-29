@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+//import com.squareup.picasso.Picasso
 import vanrrtech.app.retrofitandrx.R
 import vanrrtech.app.retrofitandrx.datamodels.TotalCovidDataHolder
 import vanrrtech.app.retrofitandrx.datamodels.ViewTypeDataHolder
@@ -39,7 +40,7 @@ class TotalCovidRecycleAdapter (context: Context) : RecyclerView.Adapter<TotalCo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.covid_monitoring_child_card, parent, false)
+            .inflate(R.layout.news_card_list_view_card_child, parent, false)
         return ViewHolder(view, this.context, mTotalCovid!!)
     }
 
@@ -62,16 +63,16 @@ class TotalCovidRecycleAdapter (context: Context) : RecyclerView.Adapter<TotalCo
         var logo : ImageView? = null
         var title : TextView? = null
         var mContext : Context? = null
-        var valueData : TextView? = null
+//        var valueData : TextView? = null
         var mProgressBar : ProgressBar? = null
         var mTotalCovid = mTotalCovid
         init{
             mContext = context
             myView = itemView
-            logo = myView?.findViewById(R.id.logo)
-            title = myView?.findViewById(R.id.title_covid_data)
-            valueData = myView?.findViewById(R.id.covid_total_value)
-            mProgressBar = myView?.findViewById(R.id.loading)
+            logo = myView?.findViewById(R.id.image_card)
+            title = myView?.findViewById(R.id.headline_card)
+//            valueData = myView?.findViewById(R.id.covid_total_value)
+            mProgressBar = myView?.findViewById(R.id.progress_bar_circular)
         }
         fun setPos(pos : Int?){
             position = pos
@@ -83,30 +84,34 @@ class TotalCovidRecycleAdapter (context: Context) : RecyclerView.Adapter<TotalCo
             when(position){
                 0 -> { /** Covid Infection **/
                     mProgressBar?.visibility = View.VISIBLE
+                    logo?.visibility = View.INVISIBLE
                     if(mTotalCovid.positiveCase != null){
                         likeTheRealRenderingStuff(mProgressBar, mContext, logo, title,
-                            mTotalCovid.positiveCase, valueData, "Positive Case", R.drawable.coronavirus, "#c79e75")
+                            mTotalCovid.positiveCase, null, "Positive Case", R.drawable.infected_small, "#c79e75")
                     }
                 }
                 1 -> { /** Covid Recovered **/
                     mProgressBar?.visibility = View.VISIBLE
+                    logo?.visibility = View.INVISIBLE
                     if(mTotalCovid.positiveCase != null){
                         likeTheRealRenderingStuff(mProgressBar!!, mContext!!, logo!!, title!!,
-                            mTotalCovid.recovered!!, valueData!!, "Recovered Case", R.drawable.recovered, "#00aeed")
+                            mTotalCovid.recovered!!, null, "Recovered Case", R.drawable.recovered, "#00aeed")
                     }
                 }
                 2 -> { /** Covid Hospitalized **/
                     mProgressBar?.visibility = View.VISIBLE
+                    logo?.visibility = View.INVISIBLE
                     if(mTotalCovid.positiveCase != null){
                         likeTheRealRenderingStuff(mProgressBar!!, mContext!!, logo!!, title!!,
-                            mTotalCovid.hospitalized!!, valueData!!, "Horspitalized Case", R.drawable.hospital, "#f76161")
+                            mTotalCovid.hospitalized!!, null, "Hospitalized Case", R.drawable.isolation_quarantine, "#f76161")
                     }
                 }
                 3 -> { /** Covid Passed Away **/
                     mProgressBar?.visibility = View.VISIBLE
+                    logo?.visibility = View.INVISIBLE
                     if(mTotalCovid.positiveCase != null){
                         likeTheRealRenderingStuff(mProgressBar!!, mContext!!, logo!!, title!!,
-                            mTotalCovid.deceased!!, valueData!!, "Deceased", R.drawable.deceased, "#A9A9A9")
+                            mTotalCovid.deceased!!, null, "Deceased", R.drawable.cemetary, "#A9A9A9")
                     }
                 }
             }
@@ -116,11 +121,12 @@ class TotalCovidRecycleAdapter (context: Context) : RecyclerView.Adapter<TotalCo
                                       context: Context?, logo : ImageView?, title : TextView?,
                                       value : Int?, valueData : TextView?, titleString : String?, logoId : Int?, color : String?){
             progressBar?.visibility = View.GONE
-            Picasso.with(context).load(logoId!!).into(logo)
-            title?.text = titleString
+            Glide.with(context!!).load(logoId!!).into(logo!!)
+            logo?.visibility = View.VISIBLE
+            title?.text = "\n" + titleString + "\n" + value!!.toString()
             title?.setTextColor(Color.parseColor(color))
-            valueData?.text = value!!.toString()
-            valueData?.setTextColor(Color.parseColor(color))
+//            valueData?.text = value!!.toString()
+//            valueData?.setTextColor(Color.parseColor(color))
         }
     }
 

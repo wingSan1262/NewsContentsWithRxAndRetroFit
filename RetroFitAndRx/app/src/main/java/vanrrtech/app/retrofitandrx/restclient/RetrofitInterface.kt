@@ -15,7 +15,7 @@ interface RetrofitInterface {
 
     //everything?q=bitcoin&apiKey=c70d16a18af1458691e24d4be76e7736
 
-    @GET("everything?apiKey=f2aefd4d5a474ac386ff27389ff67d43")
+    @GET("everything?apiKey=f2aefd4d5a474ac386ff27389ff67d43&from=2021-09-27")
     fun getNewsContent(@Query("q") body: String?): io.reactivex.Observable<NewApiJsonDataHolder>
 
     @GET("update.json")

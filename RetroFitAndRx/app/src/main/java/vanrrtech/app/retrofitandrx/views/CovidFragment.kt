@@ -68,7 +68,7 @@ class CovidFragment : Fragment(), java.util.Observer {
 
 
         // Inflate the layout for this fragment
-        mBinding = FragmentCovidBinding.inflate(inflater, container, false)
+        mBinding = vanrrtech.app.retrofitandrx.databinding.FragmentCovidBinding.inflate(inflater, container, false)
 
         //setUpRecyclerView
         mRecyclerView = mBinding?.covidMonitorRv
@@ -114,6 +114,10 @@ class CovidFragment : Fragment(), java.util.Observer {
     override fun update(o: Observable?, arg: Any?) {
         (mRecyclerView?.adapter as TotalCovidRecycleAdapter).setDataList(mModelView?.mTotalCovidDataHolder!!)
 
+        setGraph()
+    }
+
+    fun setGraph(){
         var mCovidGraphData = mModelView?.mCovidGraphData
         var mDeathGraph = mModelView?.mDeceasedGraphdata
 
@@ -130,6 +134,8 @@ class CovidFragment : Fragment(), java.util.Observer {
         kasusLineDataSet.color = Color.BLUE
         kasusLineDataSet.circleRadius = 5f
         kasusLineDataSet.setCircleColor(Color.BLUE)
+        kasusLineDataSet.setDrawFilled(true)
+        kasusLineDataSet.fillColor = Color.BLUE
 
         covidCase?.description?.isEnabled = false
         covidCase?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
@@ -141,6 +147,8 @@ class CovidFragment : Fragment(), java.util.Observer {
         meninggalLineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
         meninggalLineDataSet.color = resources.getColor(R.color.purple_700)
         meninggalLineDataSet.circleRadius = 5f
+        meninggalLineDataSet.setDrawFilled(true)
+        meninggalLineDataSet.fillColor = resources.getColor(R.color.purple_200)
         meninggalLineDataSet.setCircleColor(resources.getColor(R.color.purple_700))
 
         val legendDeath = deathCase?.legend

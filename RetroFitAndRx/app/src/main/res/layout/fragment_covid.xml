@@ -86,7 +86,6 @@
                     android:paddingHorizontal="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cc7fa1f5"
                     />
 
                 <TextView
@@ -103,8 +102,7 @@
                     android:layout_marginTop="5dp"
                     android:id="@+id/chart_covid"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="#cc7fa1f5"/>
+                    android:layout_height="200dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -116,7 +114,6 @@
                     android:textStyle="bold"/>
 
                 <com.github.mikephil.charting.charts.LineChart
-                    android:background="#cc7fa1f5"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="5dp"
                     android:id="@+id/death_chart"
