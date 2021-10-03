@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@color/purple_200"
+    android:layout_width="match_parent"
+    android:layout_height="110dp">
+
+    <!--Use Linear Layout and Layout Weight to create super flexible layout-->
+    <!--without java or kt resizing code :)-->
+    <ImageView
+        android:id="@+id/thumb"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:src="@drawable/mask_illustration"
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+            <TextView
+                android:id="@+id/video_title"
+                android:text="Title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"/>
+            <TextView
+                android:id="@+id/video_duration"
+                android:text="duration"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/video_desc"
+            android:text="Lorem Ipsum Lorem Ipsum "
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"/>
+
+        <!--RV for rating, just set programatically horizontal and set adapter to RV-->
+        <ImageView
+            android:id="@+id/rating_view"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/download_button"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:layout_marginVertical="10dp"
+        />
+
+</LinearLayout>
