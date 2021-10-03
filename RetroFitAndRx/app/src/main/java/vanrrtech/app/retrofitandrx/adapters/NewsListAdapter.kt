@@ -1,5 +1,6 @@
 package vanrrtech.app.retrofitandrx.adapters
 
+import android.content.Context
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -11,29 +12,32 @@ import vanrrtech.app.retrofitandrx.datamodels.NewsItemDataModelForJSON
 import vanrrtech.app.retrofitandrx.datamodels.ViewTypeDataHolder
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
 import vanrrtech.app.retrofitandrx.restclient.RetrofitInterface
+import vanrrtech.app.retrofitandrx.roomdb.ArticleDataBase
 import java.util.*
 import java.util.concurrent.Callable
 import kotlin.collections.HashMap
 
 
-class NewsListAdapter() : Observable(){
+class NewsListAdapter(context: Context) : Observable(){
     var completeNewsList = HashMap<String, ViewTypeDataHolder>()
     var dataSizeParsingCounter : Int? = 0
     var mInterface : RetrofitInterface = RetrofitClientKt.getClientNews().create(RetrofitInterface::class.java)
     var compositeDisposable = CompositeDisposable()
     var mCompleteArrayList = ArrayList<ViewTypeDataHolder>()
+    lateinit var mContext : Context
 
 
     init {
+        mContext = context
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "World News", 0))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Android", 1))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Bitcoin", 2))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "Palestine", 3))
-        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Indonesia", 4))
-        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Stock", 5))
-        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "USA", 6))
-        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Hajj", 7))
-        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Jazz", 8))
+//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Indonesia", 4))
+//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Stock", 5))
+//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "USA", 6))
+//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Hajj", 7))
+//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Jazz", 8))
 //        completeNewsList.put("World News", ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "World News"))
 //        completeNewsList.put("Android", ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Android"))
 //        completeNewsList.put("Bitcoin", ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Bitcoin"))
@@ -81,10 +85,20 @@ class NewsListAdapter() : Observable(){
         io.reactivex.Observable.fromCallable(object : Callable<Boolean?> {
             @Throws(java.lang.Exception::class)
             override fun call(): Boolean? {
+
+                var appDb : ArticleDataBase? = null
                 for (i in 0 until article?.size!!-1) {
-                    newsItemListData?.add(article.get(i))
+                    try {
+                         appDb = ArticleDataBase.getInstance(mContext)
+                        newsItemListData?.add(article.get(i))
+                        appDb?.articlerDao()?.insertArticle(article.get(i))
+                    } catch (e : java.lang.Exception){
+                        Log.i("database error", e.toString())
+                    }
+
                 }
                 mCompleteArrayList.get(pos!!).setNewsItemList(newsItemListData)
+                var mList = appDb?.articlerDao()?.loadAllSavedArticle()
                 return true
             }
         }) // Execute in IO thread, i.e. background thread.
