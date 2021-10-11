@@ -13,6 +13,7 @@ import vanrrtech.app.retrofitandrx.datamodels.ViewTypeDataHolder
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
 import vanrrtech.app.retrofitandrx.restclient.RetrofitInterface
 import vanrrtech.app.retrofitandrx.roomdb.ArticleDataBase
+import vanrrtech.app.retrofitandrx.utils.Utils
 import java.util.*
 import java.util.concurrent.Callable
 import kotlin.collections.HashMap
@@ -57,7 +58,7 @@ class NewsListAdapter(context: Context) : Observable(){
         if (whatNewsToGet.mTitle?.contains("world", true) == true){
             query = "world"
         }
-        val disposable: Disposable = mInterface.getNewsContent(query)
+        val disposable: Disposable = mInterface.getNewsContent(query, Utils.getUtils().getDate2DaysAgo())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Consumer<NewApiJsonDataHolder?> {
@@ -86,19 +87,19 @@ class NewsListAdapter(context: Context) : Observable(){
             @Throws(java.lang.Exception::class)
             override fun call(): Boolean? {
 
-                var appDb : ArticleDataBase? = null
-                for (i in 0 until article?.size!!-1) {
-                    try {
-                         appDb = ArticleDataBase.getInstance(mContext)
-                        newsItemListData?.add(article.get(i))
-                        appDb?.articlerDao()?.insertArticle(article.get(i))
-                    } catch (e : java.lang.Exception){
-                        Log.i("database error", e.toString())
-                    }
-
-                }
+//                var appDb : ArticleDataBase? = null
+//                for (i in 0 until article?.size!!-1) {
+//                    try {
+//                         appDb = ArticleDataBase.getInstance(mContext)
+//                        newsItemListData?.add(article.get(i))
+//                        appDb?.articlerDao()?.insertArticle(article.get(i))
+//                    } catch (e : java.lang.Exception){
+//                        Log.i("database error", e.toString())
+//                    }
+//
+//                }
                 mCompleteArrayList.get(pos!!).setNewsItemList(newsItemListData)
-                var mList = appDb?.articlerDao()?.loadAllSavedArticle()
+//                var mList = appDb?.articlerDao()?.loadAllSavedArticle()
                 return true
             }
         }) // Execute in IO thread, i.e. background thread.

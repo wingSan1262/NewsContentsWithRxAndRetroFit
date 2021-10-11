@@ -19,8 +19,7 @@ import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
 import io.reactivex.Observer
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +36,7 @@ import vanrrtech.app.retrofitandrx.modelview.CovidModelView
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
 import vanrrtech.app.retrofitandrx.restclient.RetrofitInterface
 import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -165,6 +165,7 @@ class CovidFragment : Fragment(), java.util.Observer {
         var mCovidGraphData = mModelView?.mCovidGraphData
         var mDeathGraph = mModelView?.mDeceasedGraphdata
 
+
         //Setup Legend
         val legend = covidCase?.legend
         legend?.isEnabled = true
@@ -206,5 +207,35 @@ class CovidFragment : Fragment(), java.util.Observer {
         deathCase?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
         deathCase?.data = LineData(meninggalLineDataSet)
         deathCase?.animateXY(100, 500)
+
+        // set
+        val mVaccineBarGraph = mBinding?.vaccineBarChart
+        val legendVaccine = mVaccineBarGraph!!.legend
+        legendVaccine.isEnabled = true
+        legendVaccine.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP)
+        legendVaccine.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER)
+        legendVaccine.setOrientation(Legend.LegendOrientation.HORIZONTAL)
+        legendVaccine.setDrawInside(false)
+
+        if (mModelView?.mVaccineData == null){
+            return;
+        }
+        val vaccineData = ArrayList<BarEntry>()
+        vaccineData.add(BarEntry(1f, mModelView?.mVaccineData?.vaksin2?.toFloat()!!))
+        vaccineData.add(BarEntry(2f, mModelView?.mVaccineData?.vaksin1?.toFloat()!!))
+        vaccineData.add(BarEntry(3f, mModelView?.mVaccineData?.totalsasaran?.toFloat()!!))
+
+        val vaccineBarDataSet = BarDataSet(vaccineData, "Kasus")
+        vaccineBarDataSet.color = Color.BLUE
+
+        mVaccineBarGraph.description.isEnabled = false
+        mVaccineBarGraph.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        mVaccineBarGraph.data = BarData(vaccineBarDataSet)
+        mVaccineBarGraph.animateXY(100, 500)
+
+        mBinding?.remarkVaccine?.text = "Target: ${mModelView?.mVaccineData?.totalsasaran?.toString()} + " +
+                "\n Vaksin 1: ${mModelView?.mVaccineData?.vaksin1?.toString()} + \n" +
+                "\n Vaksin 2: ${mModelView?.mVaccineData?.vaksin2?.toString()} + \n"
+
     }
 }

@@ -16,6 +16,7 @@ import vanrrtech.app.retrofitandrx.adapters.NewsListAdapter
 import vanrrtech.app.retrofitandrx.datamodels.*
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
 import vanrrtech.app.retrofitandrx.restclient.RetrofitInterface
+import vanrrtech.app.retrofitandrx.utils.Utils
 import java.util.ArrayList
 import java.util.Observable
 import java.util.concurrent.Callable
@@ -29,6 +30,8 @@ class CovidModelView : Observable(){
 
     var mCovidGraphData = ArrayList<Entry>()
     var mDeceasedGraphdata = ArrayList<Entry>()
+    var mVaccineData : VaccineDataHolder? = null
+
     var mCovidArticles : List<NewsItemDataModelForJSON>? = null
 
     var runningThreads : Int = 0
@@ -40,7 +43,7 @@ class CovidModelView : Observable(){
 
     fun startFetchingData(){
         // TODO fetching data using RX
-        runningThreads = 2;
+        runningThreads = 3;
         val mInterfaceClient = RetrofitClientKt.getClientCovid().create(RetrofitInterface::class.java)
         val call = mInterfaceClient.getCovidContent()
         call?.enqueue(object : Callback<CovidJsonDataHolder?> {
@@ -61,7 +64,9 @@ class CovidModelView : Observable(){
 
         val mInterfaceNews = RetrofitClientKt.mRetrofitNewsClient?.create(RetrofitInterface::class.java)
 
-        val disposable: Disposable = mInterfaceNews!!.getNewsContent("Corona-indonesia")
+        val disposable: Disposable = mInterfaceNews!!.getNewsContent("Corona-indonesia",
+            Utils.getUtils().getDate2DaysAgo()
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Consumer<NewApiJsonDataHolder?> {
@@ -83,6 +88,24 @@ class CovidModelView : Observable(){
                 }
             })
         compositeDisposable.add(disposable)
+
+        val minterfaceVaccine = RetrofitClientKt.getVaccineProgress().create(RetrofitInterface::class.java)
+        val callVaccine = minterfaceVaccine.getVaccineContent()
+        callVaccine?.enqueue(object : Callback<VaccineDataHolder?> {
+            override fun onResponse(
+                call: Call<VaccineDataHolder?>?,
+                response: Response<VaccineDataHolder?>?
+            ) {
+                runningThreads -= 1
+                mVaccineData = response?.body()
+                parseAndUpdateUI()
+            }
+
+            override fun onFailure(call: Call<VaccineDataHolder?>?, t: Throwable?) {
+                Log.e("Error Retrofit", t.toString())
+            }
+        })
+
     }
 
     fun parseAndUpdateUI(){
