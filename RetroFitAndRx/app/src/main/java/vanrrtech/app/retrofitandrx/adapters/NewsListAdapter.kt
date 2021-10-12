@@ -87,17 +87,17 @@ class NewsListAdapter(context: Context) : Observable(){
             @Throws(java.lang.Exception::class)
             override fun call(): Boolean? {
 
-//                var appDb : ArticleDataBase? = null
-//                for (i in 0 until article?.size!!-1) {
-//                    try {
+                var appDb : ArticleDataBase? = null
+                for (i in 0 until article?.size!!-1) {
+                    try {
 //                         appDb = ArticleDataBase.getInstance(mContext)
-//                        newsItemListData?.add(article.get(i))
+                        newsItemListData?.add(article.get(i))
 //                        appDb?.articlerDao()?.insertArticle(article.get(i))
-//                    } catch (e : java.lang.Exception){
-//                        Log.i("database error", e.toString())
-//                    }
-//
-//                }
+                    } catch (e : java.lang.Exception){
+                        Log.i("database error", e.toString())
+                    }
+
+                }
                 mCompleteArrayList.get(pos!!).setNewsItemList(newsItemListData)
 //                var mList = appDb?.articlerDao()?.loadAllSavedArticle()
                 return true

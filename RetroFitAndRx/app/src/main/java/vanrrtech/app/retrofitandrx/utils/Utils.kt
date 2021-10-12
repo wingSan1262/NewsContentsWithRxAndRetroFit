@@ -20,7 +20,7 @@ class Utils {
     public fun getDate2DaysAgo(): String {
         val calendar: Calendar = Calendar.getInstance()
         calendar.setTime(java.util.Date())
-        calendar.add(Calendar.DAY_OF_YEAR, -2)
+        calendar.add(Calendar.DAY_OF_YEAR, -4)
         val newDate: Date = calendar.getTime()
         val df = DateFormat.format("yyyy-MM-dd", newDate)
         return df.toString()

@@ -1,9 +1,7 @@
 package vanrrtech.app.retrofitandrx.modelview
 
-import android.graphics.Color
 import android.util.Log
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -12,7 +10,6 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import vanrrtech.app.retrofitandrx.adapters.NewsListAdapter
 import vanrrtech.app.retrofitandrx.datamodels.*
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
 import vanrrtech.app.retrofitandrx.restclient.RetrofitInterface
@@ -29,7 +26,9 @@ class CovidModelView : Observable(){
 
 
     var mCovidGraphData = ArrayList<Entry>()
+    var mCovidDate = ArrayList<String>();
     var mDeceasedGraphdata = ArrayList<Entry>()
+
     var mVaccineData : VaccineDataHolder? = null
 
     var mCovidArticles : List<NewsItemDataModelForJSON>? = null
@@ -62,7 +61,7 @@ class CovidModelView : Observable(){
             }
         })
 
-        val mInterfaceNews = RetrofitClientKt.mRetrofitNewsClient?.create(RetrofitInterface::class.java)
+        val mInterfaceNews = RetrofitClientKt.getClientNews()?.create(RetrofitInterface::class.java)
 
         val disposable: Disposable = mInterfaceNews!!.getNewsContent("Corona-indonesia",
             Utils.getUtils().getDate2DaysAgo()
@@ -117,11 +116,15 @@ class CovidModelView : Observable(){
             @Throws(java.lang.Exception::class)
             override fun call(): Boolean? {
                 mCovidGraphData.clear()
+                mDeceasedGraphdata.clear()
+                mCovidDate.clear()
                 for(i in 0..19){
                     val x : Float = i.toFloat()
                     val covidValue = mDailyCovidHolder?.get((mDailyCovidHolder?.size!!-1) - ((i)*15))?.positive?.value
+                    val date = mDailyCovidHolder?.get((mDailyCovidHolder?.size!!-1) - ((i)*15))?.date
                     var deceasedValue = mDailyCovidHolder?.get((mDailyCovidHolder?.size!!-1) - ((i)*15))?.meninggal?.value
                     mCovidGraphData.add(Entry( x, covidValue?.toFloat()!!))
+                    mCovidDate.add(date!!.substring(0, date.indexOf("T")))
                     mDeceasedGraphdata.add(Entry( x, deceasedValue?.toFloat()!!))
                 }
                 return true

@@ -40,13 +40,13 @@ class RetrofitClientKt {
         var mRetrofitClientVaccine : Retrofit? = null
 
         public fun getVaccineProgress () : Retrofit{
-            if(mRetrofitCovidClient == null){
-                mRetrofitCovidClient = Retrofit.Builder()
+            if(mRetrofitClientVaccine == null){
+                mRetrofitClientVaccine = Retrofit.Builder()
                     .baseUrl("https://vaksincovid19-api.vercel.app/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
-            return mRetrofitCovidClient!!
+            return mRetrofitClientVaccine!!
         }
     }
 }

@@ -35,6 +35,8 @@ import vanrrtech.app.retrofitandrx.datamodels.TotalCovidDataHolder
 import vanrrtech.app.retrofitandrx.modelview.CovidModelView
 import vanrrtech.app.retrofitandrx.restclient.RetrofitClientKt
 import vanrrtech.app.retrofitandrx.restclient.RetrofitInterface
+import vanrrtech.app.retrofitandrx.utils.AxisDateFormatter
+import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -164,7 +166,10 @@ class CovidFragment : Fragment(), java.util.Observer {
     fun setGraph(){
         var mCovidGraphData = mModelView?.mCovidGraphData
         var mDeathGraph = mModelView?.mDeceasedGraphdata
+        val mDate = mModelView?.mCovidDate
+        Collections.reverse(mDate)
 
+        val tanggal = AxisDateFormatter(mDate!!.toArray(arrayOfNulls<String>(mDate.size)))
 
         //Setup Legend
         val legend = covidCase?.legend
@@ -186,6 +191,8 @@ class CovidFragment : Fragment(), java.util.Observer {
         covidCase?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
         covidCase?.data = LineData(kasusLineDataSet)
         covidCase?.animateXY(100, 500)
+        covidCase?.xAxis?.valueFormatter = tanggal
+        covidCase?.xAxis?.setLabelCount(4, true)
 
 
         val meninggalLineDataSet = LineDataSet(mDeathGraph, "Death Case")
@@ -207,6 +214,8 @@ class CovidFragment : Fragment(), java.util.Observer {
         deathCase?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
         deathCase?.data = LineData(meninggalLineDataSet)
         deathCase?.animateXY(100, 500)
+        deathCase?.xAxis?.valueFormatter = tanggal
+        deathCase?.xAxis?.setLabelCount(4, true)
 
         // set
         val mVaccineBarGraph = mBinding?.vaccineBarChart
@@ -221,21 +230,26 @@ class CovidFragment : Fragment(), java.util.Observer {
             return;
         }
         val vaccineData = ArrayList<BarEntry>()
-        vaccineData.add(BarEntry(1f, mModelView?.mVaccineData?.vaksin2?.toFloat()!!))
-        vaccineData.add(BarEntry(2f, mModelView?.mVaccineData?.vaksin1?.toFloat()!!))
-        vaccineData.add(BarEntry(3f, mModelView?.mVaccineData?.totalsasaran?.toFloat()!!))
+        vaccineData.add(BarEntry(1f, mModelView?.mVaccineData?.vaksin2?.toFloat()!! * 100 / mModelView?.mVaccineData?.totalsasaran?.toFloat()!!))
+        vaccineData.add(BarEntry(2f, mModelView?.mVaccineData?.vaksin1?.toFloat()!! * 100 / mModelView?.mVaccineData?.totalsasaran?.toFloat()!!))
 
-        val vaccineBarDataSet = BarDataSet(vaccineData, "Kasus")
+        val vaccineBarDataSet = BarDataSet(vaccineData, "Vaccination (%)")
         vaccineBarDataSet.color = Color.BLUE
+
+        // bar graph data
+        var vaksinXAxis = ArrayList<String>();
+        vaksinXAxis.add("vaksin 1")
+        vaksinXAxis.add("vaksin 2")
+        val xAxisVaksin = AxisDateFormatter(vaksinXAxis.toArray(arrayOfNulls<String>(vaksinXAxis.size)))
 
         mVaccineBarGraph.description.isEnabled = false
         mVaccineBarGraph.xAxis.position = XAxis.XAxisPosition.BOTTOM
         mVaccineBarGraph.data = BarData(vaccineBarDataSet)
         mVaccineBarGraph.animateXY(100, 500)
+        mVaccineBarGraph.axisLeft.axisMaximum = 100F
+        mVaccineBarGraph.axisRight.axisMaximum = 100F
+        mVaccineBarGraph.xAxis.setLabelCount(0, true)
 
-        mBinding?.remarkVaccine?.text = "Target: ${mModelView?.mVaccineData?.totalsasaran?.toString()} + " +
-                "\n Vaksin 1: ${mModelView?.mVaccineData?.vaksin1?.toString()} + \n" +
-                "\n Vaksin 2: ${mModelView?.mVaccineData?.vaksin2?.toString()} + \n"
-
+        mBinding?.targetVaccine?.text = "Target: ${BigDecimal(mModelView?.mVaccineData?.totalsasaran!!).toPlainString()} person"
     }
 }
