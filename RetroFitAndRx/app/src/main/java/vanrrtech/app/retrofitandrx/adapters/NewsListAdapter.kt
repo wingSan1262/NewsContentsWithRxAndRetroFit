@@ -33,7 +33,7 @@ class NewsListAdapter(context: Context) : Observable(){
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "World News", 0))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Android", 1))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Bitcoin", 2))
-        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "Palestine", 3))
+//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "Palestine", 3))
 //        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Indonesia", 4))
 //        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Stock", 5))
 //        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "USA", 6))
