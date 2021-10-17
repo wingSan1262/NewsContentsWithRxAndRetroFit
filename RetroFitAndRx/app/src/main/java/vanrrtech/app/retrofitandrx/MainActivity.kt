@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // replacing content view
         mBinding = DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.main_activity)
 
-        mClient = RetrofitClientKt.getClient()
+        mClient = RetrofitClientKt.getClientNews()
 
         var mInterface : RetrofitInterface = mClient!!.create(RetrofitInterface::class.java)
         val sectionsPagerAdapter = NewsPagerAdapter(this, supportFragmentManager)

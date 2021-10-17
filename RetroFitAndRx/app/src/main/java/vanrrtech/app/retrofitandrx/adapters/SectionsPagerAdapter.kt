@@ -9,7 +9,7 @@ import vanrrtech.app.retrofitandrx.views.ViewPagerCardFragments
 
 private val TAB_TITLES = arrayOf(
     "News",
-    "Meme"
+    "COVID"
 )
 
 /**
@@ -21,6 +21,8 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, mL
     var mList : ArrayList<NewsItemDataModelForJSON>? = null
     var limitReload : Int? = 0
     var flagReload = false
+    var type : Int = -1
+    var mArrayGifList = ArrayList<Int>()
     init {
         mList = mListData
     }
@@ -31,16 +33,39 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, mL
         notifyDataSetChanged()
     }
 
+    fun setTypeContent (typeNews : Int){
+        type = typeNews
+    }
+
+    fun setGifList(gifList : ArrayList<Int>){
+        mArrayGifList = gifList
+    }
+
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a SignUpFragment (defined as a static inner class below).
         val fragment: Fragment
 
-        fragment = ViewPagerCardFragments.newInstance(mList?.get(position)?.mTitle!!,
-            mList?.get(position)?.mDate!!,
-            mList?.get(position)?.mUrlImage!!,
-            position, mList?.get(position)?.mUrl!!
-        )
+        if(type == ViewPagerCardFragments.COVID_CONTENT){
+            fragment = ViewPagerCardFragments.newInstance(mList?.get(position)?.mTitle!!,
+                mList?.get(position)?.mDate!!,
+                mList?.get(position)?.mUrlImage!!,
+                position, mList?.get(position)?.mUrl!!, type
+            )
+        } else if (type == ViewPagerCardFragments.COVID_CAMPAIGN){
+            fragment = ViewPagerCardFragments.newInstance("",
+                "",
+                "",
+                position, "", type, mArrayGifList.get(position)
+            )
+        }else {
+            fragment = ViewPagerCardFragments.newInstance(mList?.get(position)?.mTitle!!,
+                mList?.get(position)?.mDate!!,
+                mList?.get(position)?.mUrlImage!!,
+                position, mList?.get(position)?.mUrl!!
+            )
+        }
+
 
         limitReload = position
         return fragment
@@ -65,6 +90,9 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, mL
 
     override fun getCount(): Int {
         // Show 2 total pages.
+        if(type == ViewPagerCardFragments.COVID_CAMPAIGN){
+            return mArrayGifList.size
+        }
         return mList!!.size
     }
 }

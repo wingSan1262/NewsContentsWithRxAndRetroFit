@@ -1,14 +1,16 @@
 package vanrrtech.app.retrofitandrx.modelview
 
+import android.content.Context
+import com.github.mikephil.charting.data.Entry
 import vanrrtech.app.retrofitandrx.adapters.NewsListAdapter
 import vanrrtech.app.retrofitandrx.datamodels.ViewTypeDataHolder
 import java.util.ArrayList
 import java.util.Observable
 
-class NewsModelView : Observable(), java.util.Observer{
+class NewsModelView(context: Context) : Observable(), java.util.Observer{
 
     var mCompleteNewsList = ArrayList<ViewTypeDataHolder>()
-    var mNewsAdapter : NewsListAdapter = NewsListAdapter()
+    var mNewsAdapter : NewsListAdapter = NewsListAdapter(context)
 
     fun notifyObeserverAndUpdateUI(){
         mCompleteNewsList.clear()

@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import vanrrtech.app.retrofitandrx.databinding.FragmentMemeBinding
+import vanrrtech.app.retrofitandrx.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -14,14 +14,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MemeFragment.newInstance] factory method to
+ * Use the [RegionChooserFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MemeFragment : Fragment() {
+class RegionChooserFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var mBinding: FragmentMemeBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +35,7 @@ class MemeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mBinding = FragmentMemeBinding.inflate(inflater, container, false)
-        return  mBinding?.root
+        return inflater.inflate(R.layout.fragment_region_chooser, container, false)
     }
 
     companion object {
@@ -47,12 +45,12 @@ class MemeFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MemeFragment.
+         * @return A new instance of fragment RegionChooserFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MemeFragment().apply {
+            RegionChooserFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

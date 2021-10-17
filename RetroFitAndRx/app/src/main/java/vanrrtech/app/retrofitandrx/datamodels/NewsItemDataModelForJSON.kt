@@ -1,5 +1,6 @@
 package vanrrtech.app.retrofitandrx.datamodels
 
+import androidx.room.ColumnInfo
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
@@ -22,11 +23,37 @@ import com.google.gson.annotations.SerializedName
 },
  */
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.*
+
+@Entity (tableName = "news_article")
 data class NewsItemDataModelForJSON (
-    @SerializedName("title") val mTitle : String? = "",
-    @SerializedName("publishedAt") val mDate : String? = "",
-    @SerializedName("author") val mAuthor : String? = "",
-    @SerializedName("urlToImage") val mUrlImage : String? = "",
-    @SerializedName("url") val mUrl : String? = "",
-    @SerializedName("content") val mContent : String? = ""
+    @PrimaryKey (autoGenerate = false)
+    @Expose
+    var id: String = UUID.randomUUID().toString(),
+
+    @SerializedName("title")
+    @ColumnInfo(name = "title")
+    val mTitle : String? = "",
+
+    @SerializedName("publishedAt")
+    @ColumnInfo(name = "publishedAt")
+    val mDate : String? = "",
+
+    @SerializedName("author")
+    @ColumnInfo(name = "author")
+    val mAuthor : String? = "",
+
+    @SerializedName("urlToImage")
+    @ColumnInfo(name = "urlToImage")
+    val mUrlImage : String? = "",
+
+    @SerializedName("url")
+    @ColumnInfo(name = "url")
+    val mUrl : String? = "",
+
+    @SerializedName("content")
+    @ColumnInfo(name = "content")
+    val mContent : String? = ""
 )

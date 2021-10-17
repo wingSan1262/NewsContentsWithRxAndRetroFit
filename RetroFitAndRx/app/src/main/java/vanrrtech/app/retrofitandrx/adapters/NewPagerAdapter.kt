@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import vanrrtech.app.retrofitandrx.views.MemeFragment
+import vanrrtech.app.retrofitandrx.views.CovidFragment
 import vanrrtech.app.retrofitandrx.views.NewsFragment
 
 private val TAB_TITLES = arrayOf(
     "News",
-    "Meme"
+    "COVID"
 )
 
 /**
@@ -25,7 +25,7 @@ class NewsPagerAdapter(private val context: Context, fm: FragmentManager) : Frag
 
         when(position) {
             0 -> fragment = NewsFragment.newInstance("null", "null")
-            1 -> fragment = MemeFragment.newInstance("null", "null")
+            1 -> fragment = CovidFragment.newInstance("null", "null")
             else -> {
                 fragment = NewsFragment.newInstance("null", "null")
             }

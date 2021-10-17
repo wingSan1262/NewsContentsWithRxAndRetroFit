@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingHorizontal="25dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_margin="0dp"
+    android:layout_height="match_parent"
+    tools:context=".views.ReadNewsWelcomeFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/fight_covid"
+        android:layout_height="0dp"
+        android:layout_weight="13"/>
+
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:src="@drawable/read_news"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Fight Covid!"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:gravity="top"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:src="@drawable/read_news"
+        android:textSize="16sp"
+        android:text="\n Fight covid by wear mask, keep distance, and wash hand. Keep updated on covid news and progress in indonesia"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        tools:ignore="RtlCompat" />
+
+    <!-- TODO: Update blank fragment layout -->
+
+</LinearLayout>
