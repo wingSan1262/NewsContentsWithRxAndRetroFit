@@ -12,18 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RetroFitAndRx">
         <activity android:name=".views.WelcomeActivity"></activity>
-        <activity android:name=".views.MainActivity" />
-        <activity android:name=".views.SplashScreen" />
-        <activity android:name=".views.WebViewActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing">
+        <activity android:name=".views.SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".views.WebViewActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing">
         </activity>
     </application>
 

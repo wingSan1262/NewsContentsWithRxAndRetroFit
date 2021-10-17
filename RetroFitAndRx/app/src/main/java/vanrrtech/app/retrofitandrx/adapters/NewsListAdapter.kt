@@ -33,8 +33,8 @@ class NewsListAdapter(context: Context) : Observable(){
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "World News", 0))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Android", 1))
         mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Bitcoin", 2))
-//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "Palestine", 3))
-//        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Indonesia", 4))
+        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "Palestine", 3))
+        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Indonesia", 4))
 //        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Stock", 5))
 //        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_PAGER_VIEW, "USA", 6))
 //        mCompleteArrayList.add(ViewTypeDataHolder(RecycleViewAdapter.NEWS_CARD_LIST_VIEW, "Hajj", 7))
@@ -58,7 +58,7 @@ class NewsListAdapter(context: Context) : Observable(){
         if (whatNewsToGet.mTitle?.contains("world", true) == true){
             query = "world"
         }
-        val disposable: Disposable = mInterface.getNewsContent(query, Utils.getUtils().getDate2DaysAgo())
+        val disposable: Disposable = mInterface.getNewsContent(query, Utils.getUtils().getDate2DaysAgo(), RetrofitClientKt.mApiKey!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Consumer<NewApiJsonDataHolder?> {

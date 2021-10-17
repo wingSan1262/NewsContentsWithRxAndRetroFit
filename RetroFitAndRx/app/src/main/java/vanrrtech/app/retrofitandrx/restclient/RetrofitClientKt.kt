@@ -9,6 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClientKt {
 
     companion object {
+        var mApiKey : String = ""
+
         var mRetrofitNewsClient : Retrofit? = null
 
         public fun getClientNews () : Retrofit{

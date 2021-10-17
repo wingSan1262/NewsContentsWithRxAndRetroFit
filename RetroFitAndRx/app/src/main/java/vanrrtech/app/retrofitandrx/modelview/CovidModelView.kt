@@ -64,7 +64,7 @@ class CovidModelView : Observable(){
         val mInterfaceNews = RetrofitClientKt.getClientNews()?.create(RetrofitInterface::class.java)
 
         val disposable: Disposable = mInterfaceNews!!.getNewsContent("Corona-indonesia",
-            Utils.getUtils().getDate2DaysAgo()
+            Utils.getUtils().getDate2DaysAgo(), RetrofitClientKt.mApiKey!!
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
